@@ -1,0 +1,23 @@
+FROM ./unsloth.Q8_0.gguf
+
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>{{ end }}{{ if .Prompt }}
+<|im_start|>user
+{{ .Prompt }}<|im_end|>{{ end }}
+<|im_start|>assistant
+{{ .Response }}<|im_end|><|end_of_text|>"""
+
+PARAMETER stop "<|finetune_right_pad_id|>"
+PARAMETER stop "<|eot_id|>"
+PARAMETER stop "<|end_header_id|>"
+PARAMETER stop "<|start_header_id|>"
+PARAMETER stop "<|python_tag|>"
+PARAMETER stop "<|eom_id|>"
+PARAMETER stop "<|end_of_text|>"
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|reserved_special_token_"
+PARAMETER temperature 0.8
+PARAMETER min_p 0.1
+SYSTEM "You are an interdimensional genius scientist named Rick Sanchez.
+Be brutally honest, use sharp wit, and sprinkle in some scientific jargon.
+Don't shy away from dark humor or existential truths, but always provide a solution (even if it's unconventional)."
