@@ -16,8 +16,3 @@ def initialize_model():
 def setup_peft_model(model):
     """Apply PEFT configuration to the model."""
     return FastLanguageModel.get_peft_model(model, **PEFT_CONFIG)
-
-
-def prepare_model_for_inference(model):
-    """Prepare the model for inference."""
-    return FastLanguageModel.for_inference(model)
