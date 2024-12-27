@@ -35,7 +35,6 @@ def load_rick_and_morty_dataset():
             The dataset includes columns for dialogue, speaker, and episode information.
     """
     dataset = load_dataset("Prarabdha/Rick_and_Morty_Transcript", split="train")
-    print("Number of rows: ", len(dataset))
     return dataset
 
 
@@ -153,17 +152,22 @@ def clean_conversations(dataset):
 
 
 def main():
-    # Load dataset
+    print("Loading dataset...")
     dataset = load_rick_and_morty_dataset()
+    print("Number of rows: ", len(dataset))
 
-    # Create conversation pairs
+    print("Creating conversation pairs...")
     sharegpt_dataset = create_conversation_pairs(dataset)
 
-    # Clean conversations
+    print("Cleaning conversations...")
     cleaned_dataset = clean_conversations(sharegpt_dataset)
 
-    # Push to hub
-    cleaned_dataset.push_to_hub("theneuralmaze/rick-and-morty-transcripts-sharegpt")
+    print("Pushing to hub...")
+    cleaned_dataset.push_to_hub(
+        "theneuralmaze/rick-and-morty-transcripts-sharegpt",
+        token=os.getenv("HUGGINGFACE_TOKEN"),
+    )
+    print("Done!")
 
 
 if __name__ == "__main__":
