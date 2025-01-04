@@ -314,3 +314,6 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,python,visualstudiocode,pycharm+all
+
+### Lambda ###
+src/lambda/ssh-key/*.pem
