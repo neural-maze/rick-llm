@@ -2,7 +2,7 @@ from datasets import load_dataset
 from transformers import TrainingArguments
 from trl import SFTTrainer
 from unsloth import standardize_sharegpt, apply_chat_template, is_bfloat16_supported
-from finetune.constants import MAX_SEQ_LENGTH, TRAINING_ARGS
+from constants import MAX_SEQ_LENGTH, TRAINING_ARGS
 
 
 class ModelTrainer:

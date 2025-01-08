@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 import requests
 from dotenv import load_dotenv
@@ -82,6 +83,15 @@ def list_instance_types():
         return None
 
 
+def get_rick_vm_ip():
+    """Get the IP address of the Rick VM."""
+    intances = list_intances()
+    for instance in intances["data"]:
+        if instance["name"] == "rick-finetune-instance":
+            print(f"Rick VM IP: {instance['ip']}")
+    return
+
+
 def launch_instance():
     """Launch a new Lambda Labs instance."""
     url = f"{BASE_URL}/instance-operations/launch"
@@ -103,3 +113,42 @@ def launch_instance():
     except requests.exceptions.RequestException as e:
         print(f"Error launching instance: {e}")
         return None
+
+
+def main():
+    """Main entry point for the script."""
+    if len(sys.argv) < 2:
+        print("Usage: python commands.py <command>")
+        print("Available commands:")
+        print("  generate-ssh-key - Generate a new SSH key")
+        print("  list-ssh-keys   - List all SSH keys")
+        print("  list-instances  - List all instances")
+        print("  list-types     - List instance types")
+        print("  get-ip         - Get Rick VM IP")
+        print("  launch         - Launch instance")
+        return
+
+    command = sys.argv[1]
+
+    commands = {
+        "generate-ssh-key": generate_ssh_key,
+        "list-ssh-keys": list_ssh_keys,
+        "list-instances": list_intances,
+        "list-types": list_instance_types,
+        "get-ip": get_rick_vm_ip,
+        "launch": launch_instance,
+    }
+
+    if command not in commands:
+        print(f"Unknown command: {command}")
+        return
+
+    result = commands[command]()
+    if isinstance(result, dict):
+        print(json.dumps(result, indent=2))
+    elif result is not None:
+        print(result)
+
+
+if __name__ == "__main__":
+    main()

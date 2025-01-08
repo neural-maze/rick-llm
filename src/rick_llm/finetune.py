@@ -2,8 +2,8 @@ import os
 
 import dotenv
 
-from finetune.model_utils import initialize_model, setup_peft_model
-from finetune.trainer import ModelTrainer
+from model_utils import initialize_model, setup_peft_model
+from trainer import ModelTrainer
 
 dotenv.load_dotenv()
 

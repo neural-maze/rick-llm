@@ -1,0 +1,5 @@
+python-dotenv==1.0.1
+unsloth==2024.12.12
+unsloth_zoo==2024.12.7
+xformers==0.0.27.post2
+torchvision@https://download.pytorch.org/whl/cu121/torchvision-0.20.1%2Bcu121-cp310-cp310-linux_x86_64.whl

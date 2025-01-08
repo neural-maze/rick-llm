@@ -1,5 +1,5 @@
 from unsloth import FastLanguageModel
-from finetune.constants import MAX_SEQ_LENGTH, MODEL_CONFIG, PEFT_CONFIG
+from constants import MAX_SEQ_LENGTH, MODEL_CONFIG, PEFT_CONFIG
 
 
 def initialize_model():
