@@ -83,6 +83,18 @@ def list_instance_types():
         return None
 
 
+def get_rick_vm_id():
+    """Get the IP address of the Rick VM."""
+    intances = list_intances()
+    for instance in intances["data"]:
+        if instance["name"] == "rick-finetune-instance":
+            try:
+                return instance["id"]
+            except KeyError:
+                print("Rick VM IP not found")
+    return
+
+
 def get_rick_vm_ip():
     """Get the IP address of the Rick VM."""
     intances = list_intances()
@@ -118,6 +130,25 @@ def launch_instance():
         return None
 
 
+def terminate_instances():
+    """Terminate the Rick VM."""
+    url = f"{BASE_URL}/instance-operations/terminate"
+    auth = (API_KEY, "")
+    headers = {"Content-Type": "application/json"}
+
+    instance_id = get_rick_vm_id()
+    data = {"instance_ids": [instance_id]}
+
+    try:
+        response = requests.post(url, auth=auth, headers=headers, json=data)
+        response.raise_for_status()
+        print(f"Successfully terminated instances: {instance_id}")
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error terminating instances: {e}")
+        return None
+
+
 def main():
     """Main entry point for the script."""
     if len(sys.argv) < 2:
@@ -140,6 +171,7 @@ def main():
         "list-types": list_instance_types,
         "get-ip": get_rick_vm_ip,
         "launch": launch_instance,
+        "terminate": terminate_instances,
     }
 
     if command not in commands:
