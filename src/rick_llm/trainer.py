@@ -1,8 +1,13 @@
 from datasets import load_dataset
 from transformers import TrainingArguments
 from trl import SFTTrainer
-from unsloth import standardize_sharegpt, apply_chat_template, is_bfloat16_supported
 from constants import MAX_SEQ_LENGTH, TRAINING_ARGS
+from exceptions import UnslothNotInstalledError
+
+try:
+    from unsloth import standardize_sharegpt, apply_chat_template, is_bfloat16_supported  # type: ignore
+except ImportError:
+    raise UnslothNotInstalledError
 
 
 class ModelTrainer:

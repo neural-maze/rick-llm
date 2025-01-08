@@ -1,5 +1,10 @@
-from unsloth import FastLanguageModel
+from exceptions import UnslothNotInstalledError
 from constants import MAX_SEQ_LENGTH, MODEL_CONFIG, PEFT_CONFIG
+
+try:
+    from unsloth import FastLanguageModel  # type: ignore
+except ImportError:
+    raise UnslothNotInstalledError
 
 
 def initialize_model():
