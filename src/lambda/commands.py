@@ -88,7 +88,10 @@ def get_rick_vm_ip():
     intances = list_intances()
     for instance in intances["data"]:
         if instance["name"] == "rick-finetune-instance":
-            print(f"Rick VM IP: {instance['ip']}")
+            try:
+                print(f"Rick VM IP: {instance['ip']}")
+            except KeyError:
+                print("Rick VM IP not found")
     return
 
 
