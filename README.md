@@ -21,7 +21,8 @@
     - [4.6 Syncing the local filesystem with the remote one](#syncing-the-local-filesystem-with-the-remote-one)
     - [4.7 Configuring Lambda Labs instance](#configuring-lambda-labs-instance)
     - [4.8 Finetuning the model](#finetuning-the-model)
-    - [4.9 Creating the Ollama model](#creating-the-ollama-model)
+    - [4.9 Terminate the Lambda Labs instance   ](#terminate-the-lambda-labs-instance)
+    - [4.10 Creating the Ollama model](#creating-the-ollama-model)
 - [5. Contributing](#contributing)
 
 
@@ -70,7 +71,7 @@ This dataset will be pushed to Hugging Face, so we can use it later in the finet
 ### Model finetuning
 
 <p align="center">
-        <img alt="logo" src="img/unsloth.png" width=240 />
+        <img alt="logo" src="img/unsloth.png" width=400 />
 </p>
 
 Now that we have the dataset, we can start the finetuning process. We'll use the [Unsloth](https://unsloth.ai/) library to finetune the model. Unsloth is a library that provides a set of optimizations for finetuning LLMs, making the process faster and more efficient.
@@ -80,7 +81,7 @@ We are not going to appply a full finetuning, instead, we'll apply a LoRA finetu
 Since you might not have access to a local GPU (that's my case, at least), I've designed this process to be fully remote. This means that you'll need to have access to a cloud GPU. I've used [Lambda Labs](https://lambdalabs.com/) for this, but you can use any other cloud provider that supports GPUs.
 
 <p align="center">
-        <img alt="logo" src="img/lambda.png" width=240 />
+        <img alt="logo" src="img/lambda.png" width=400 />
 </p>
 
 > You have all the finetuning code under the [rick_llm](src/rick_llm) folder.
@@ -88,7 +89,7 @@ Since you might not have access to a local GPU (that's my case, at least), I've 
 ### Model deployment
 
 <p align="center">
-        <img alt="logo" src="img/ollama.png" width=240 />
+        <img alt="logo" src="img/ollama.png" width=400 />
 </p>
 
 Once the model is finetuned, we need to convert it to a format that can be used by Ollama. The two files we need are:
@@ -136,14 +137,14 @@ This will create the dataset and push it to Hugging Face.
 > Don't forget to change the dataset name in the `src/dataset.py` file!!
 
 <p align="center">
-        <img alt="logo" src="img/dataset_viewer.png" width=400 />
+        <img alt="logo" src="img/dataset_viewer.png" width=600 />
 </p>
 
 
 ### Configure your Lambda Labs account
 
 <p align="center">
-        <img alt="logo" src="img/lambda_home.png" width=400 />
+        <img alt="logo" src="img/lambda_home.png" width=600 />
 </p>
 
 You need to go to [Lambda Labs](https://lambdalabs.com/) and create an account. Once you have an account, you can create a new API key. This key will be used to sync the local filesystem with the remote one.
@@ -184,7 +185,7 @@ make get-lambda-ip
 Copy the IP address, since you'll need it to connect to the instance.
 
 <p align="center">
-        <img alt="logo" src="img/lambda_ip.png" width=400 />
+        <img alt="logo" src="img/lambda_ip.png" width=600 />
 </p>
 
 ### Syncing the local filesystem with the remote one
@@ -203,7 +204,7 @@ ssh ubuntu@<INSTANCE_IP>
 ```
 
 <p align="center">
-        <img alt="logo" src="img/lambda_ssh.png" width=400 />
+        <img alt="logo" src="img/lambda_ssh.png" width=600 />
 </p>
 
 ### Configuring Lambda Labs instance
@@ -225,14 +226,43 @@ make finetune
 This will start the finetuning process. You can check the progress of the finetuning by checking the logs. 
 
 <p align="center">
-        <img alt="logo" src="img/finetune.png" width=400 />
+        <img alt="logo" src="img/finetune.png" width=600 />
 </p>
 
 
 When the finetuning is finished, both the GGUF and the Modelfile will be pushed to Hugging Face (in this case, to the [The Neural Maze organization](https://huggingface.co/theneuralmaze)). If you want to push it to yours, simply change the name [here](src/rick_llm/finetune.py).
 
+### Terminate the Lambda Labs instance
+
+Once the finetuning is finished, you can terminate the Lambda Labs instance with the following command:
+
+```bash
+make terminate-instance
+```
+
 ### Creating the Ollama model
 
+Now that we have the GGUF in Hugging Face, we need to download it locally. The following command will download the GGUF file to the `ollama_files` folder.
+
+```bash
+make download-model
+```
+
+Now, you can use the Ollama CLI to create the model.
+
+```bash
+ollama create rick-llm -f ollama_files/Modelfile
+```
+
+Once the model is created, you can start chatting with your Rick-speaking AI assistant.
+
+```bash
+ollama run rick-llm
+```
+
+<p align="center">
+        <img alt="logo" src="img/rick_ollama_chat.png" width=600 />
+</p>
 
 ## Contributing
 
