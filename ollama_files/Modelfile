@@ -1,4 +1,4 @@
-FROM ./unsloth.Q8_0.gguf
+FROM unsloth.Q8_0.gguf
 
 TEMPLATE """{{ if .System }}<|im_start|>system
 {{ .System }}<|im_end|>{{ end }}{{ if .Prompt }}
