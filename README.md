@@ -39,6 +39,13 @@ It's a fun way to learn LLM finetuning while creating your own Rick-speaking AI 
 
 *Wubba lubba dub dub!*
 
+<div align="center">
+  <a href="https://youtu.be/Ucg1X_o1HDE?si=ZQ6jDqwRcMYZbNsY">
+    <img src="https://img.youtube.com/vi/Ucg1X_o1HDE/0.jpg" alt="Watch the video" />
+  </a>
+</div>
+
+
 ## Project Design 
 
 <p align="center">
